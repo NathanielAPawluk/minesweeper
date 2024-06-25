@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 
 class Square(pygame.sprite.Sprite):
     def __init__(self, x, y, row, col, SQSIZE, value):
@@ -13,6 +13,7 @@ class Square(pygame.sprite.Sprite):
             7: "darkorchid3",
             8: "gray30"
         }
+        self.path = sys.argv[0].strip("minesweeper.py")
         pygame.sprite.Sprite.__init__(self)
         pygame.init()
         self.font = pygame.font.SysFont('Cooper Black', 28)
@@ -23,7 +24,7 @@ class Square(pygame.sprite.Sprite):
         self.row = row
         self.col = col
         self.value = value
-        self.image = pygame.image.load("unopened.png")
+        self.image = pygame.image.load(f"{self.path}/assets/unopened.png")
         self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
         self.opened = False
         self.flagged = False
@@ -39,21 +40,21 @@ class Square(pygame.sprite.Sprite):
 
     def open(self):
         self.opened = True
-        self.image = pygame.image.load("opened.png")
+        self.image = pygame.image.load(f"{self.path}/assets/opened.png")
         if self.value != -1:
             self.text = self.font.render(str(self.value), 1, self.textColors[self.value])
         else:
-            self.image = pygame.image.load("mine.png")
+            self.image = pygame.image.load(f"{self.path}/assets/mine.png")
     
     def flag(self):
         if self.opened == False:
             if self.flagged == True:
                 self.flagged = False
-                self.image = pygame.image.load("unopened.png")
+                self.image = pygame.image.load(f"{self.path}/assets/unopened.png")
                 return
             self.flagged = True
-            self.image = pygame.image.load("flag.png")
+            self.image = pygame.image.load(f"{self.path}/assets/flag.png")
         
     
     def lost(self):
-        self.image = pygame.image.load("openMine.png")
+        self.image = pygame.image.load(f"{self.path}/assets/openMine.png")

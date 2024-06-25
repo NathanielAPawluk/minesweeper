@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from square import Square
 import boardState
 
@@ -11,6 +11,7 @@ VOFFSET = 80
 MINES = 40
 COLS = int(W/SQSIZE)
 ROWS = int(H/SQSIZE)
+path = sys.argv[0].strip("minesweeper.py")
 
 #Constant game variables
 screen = pygame.display.set_mode((W,H + VOFFSET))
@@ -24,7 +25,7 @@ gameStarted = False
 lost = False
 win = False
 squares = [["" for _ in range(COLS)] for _ in range(ROWS)]
-icon = pygame.image.load("faceN.png")
+icon = pygame.image.load(f"{path}/assets/faceN.png")
 iconRect = pygame.Rect(275, 15, 50, 50)
 for i in range(ROWS):
     for j in range(COLS):
@@ -42,7 +43,7 @@ while running:
                 lost = False
                 win = False
                 squares = [["" for _ in range(COLS)] for _ in range(ROWS)]
-                icon = pygame.image.load("faceN.png")
+                icon = pygame.image.load(f"{path}/assets/faceN.png")
                 for i in range(ROWS):
                     for j in range(COLS):
                         squares[i][j] = Square(j*SQSIZE, i*SQSIZE + VOFFSET, j, i, SQSIZE, 0)
@@ -87,10 +88,10 @@ while running:
             else:
                 if boardState.state(squares) == -1:
                     lost = True
-                    icon = pygame.image.load("faceL.png")
+                    icon = pygame.image.load(f"{path}/assets/faceL.png")
                 elif boardState.state(squares) == 1:
                     win = True
-                    icon = pygame.image.load("faceW.png")
+                    icon = pygame.image.load(f"{path}/assets/faceW.png")
                 pygame.display.flip()
         except IndexError:
             pass    
